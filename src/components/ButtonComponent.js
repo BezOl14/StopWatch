@@ -4,10 +4,7 @@ function ButtonComponent({ start, stop, reset, wait, status }) {
   return (
       <div>
           {(status === 0) ?
-            <div>
-                <button onClick={start}>Start</button>
-               
-            </div> : ""                
+                <button onClick={start}>Start</button> : ""                  
           }
 
           {(status === 1) ?
@@ -20,7 +17,7 @@ function ButtonComponent({ start, stop, reset, wait, status }) {
           {(status === 2) ?
               <div>         
                   <button onClick={reset}>Reset</button>
-                  <button onClick={wait}>Wait</button>                    
+                  <button onClick={wait}>Wait</button>                              
               </div> : ""
           }
       </div>
