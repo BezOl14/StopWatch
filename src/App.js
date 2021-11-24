@@ -14,7 +14,7 @@ function App() {
  
   // const click$ = useMemo(() => new Subject(), []);
 
-  var wasClicked = false;
+  var Clicked = false;
   var timeout;
 
   useEffect(() => {
@@ -51,15 +51,15 @@ function App() {
     setStatus(0);
   }
  const handleWait = () => {
-   if(wasClicked) {
-     wasClicked = false;
+   if(Clicked) {
+    Clicked = false;
      setWatchOn(timeout);
       
      return;
    }
-   wasClicked = true;
+   Clicked = true;
    timeout = setTimeout(() => {
-     wasClicked = false;
+    Clicked = false;
    }, 300);
  }
     // const handleWait = click$.pipe(
