@@ -1,20 +1,23 @@
 import './App.css';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect} from 'react';      //useMemo 
 import { interval, Subject } from "rxjs";
-import { takeUntil } from "rxjs/operators";
+import { takeUntil} from "rxjs/operators"              //map, buffer, debounceTime, filter
 
 import DisplayComponent from './components/DisplayComponent';
 import ButtonComponent from './components/ButtonComponent';
 
 
 function App() {
-
   const [time, setTime] = useState(0);
   const [watchOn, setWatchOn] = useState(false);
   const [status, setStatus] = useState(0);
+ 
+  // const click$ = useMemo(() => new Subject(), []);
+
+  var wasClicked = false;
+  var timeout;
 
   useEffect(() => {
-
     const unsubscribe = new Subject();
     interval(10)
         .pipe(takeUntil(unsubscribe))
@@ -35,28 +38,6 @@ function App() {
     setStatus(1);
   }
 
-
-  const handleWait = () => {
-    // let wasClicked = false;
-    // let timeout;
-    
-    // () => {
-    //   if(wasClicked) {
-    //     wasClicked = false;
-    //     clearTimeout(timeout);
-        
-    //     return;
-    //   }
-      
-    //   wasClicked = true;
-    //   timeout = setTimeout(() => {
-    //     wasClicked = false;
-    //   }, 300);
-    // }
-    //}
-    }
-
-
   const handleStop = () => {
     if (time !== 0) {
       setWatchOn(false);
@@ -64,13 +45,29 @@ function App() {
     setStatus(2);
   }
 
-
   const handleReset = () => {
     setTime(0);
     setWatchOn(false);
     setStatus(0);
   }
-
+ const handleWait = () => {
+   if(wasClicked) {
+     wasClicked = false;
+     setWatchOn(timeout);
+      
+     return;
+   }
+   wasClicked = true;
+   timeout = setTimeout(() => {
+     wasClicked = false;
+   }, 300);
+ }
+    // const handleWait = click$.pipe(
+    //   buffer(click$.pipe(debounceTime(300))),
+    //   map((list) => list.length),
+    //   filter((value) => value >= 2),
+    // );
+    
   return (
     <div className="App">
           <div>
