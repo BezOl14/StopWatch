@@ -1,7 +1,7 @@
 import './App.css';
-import React, { useState, useEffect} from 'react';      //useMemo 
+import React, { useState, useEffect} from 'react';      
 import { interval, Subject } from "rxjs";
-import { takeUntil} from "rxjs/operators"              //map, buffer, debounceTime, filter
+import { takeUntil} from "rxjs/operators"             
 
 import DisplayComponent from './components/DisplayComponent';
 import ButtonComponent from './components/ButtonComponent';
@@ -12,8 +12,6 @@ function App() {
   const [watchOn, setWatchOn] = useState(false);
   const [status, setStatus] = useState(0);
  
-  // const click$ = useMemo(() => new Subject(), []);
-
   var _Clicked = false;
   var timeout;
 
@@ -50,23 +48,19 @@ function App() {
     setWatchOn(false);
     setStatus(0);
   }
- const handleWait = () => {
-   if(_Clicked) {
-    _Clicked = false;
-     setWatchOn(timeout);
-      
-     return;
-   }
-   _Clicked = true;
-   timeout = setTimeout(() => {
-    _Clicked = false;
-   }, 300);
- }
-    // const handleWait = click$.pipe(
-    //   buffer(click$.pipe(debounceTime(300))),
-    //   map((list) => list.length),
-    //   filter((value) => value >= 2),
-    // );
+  const handleWait = () => {
+    if(_Clicked) {
+      _Clicked = false;
+       setWatchOn(timeout);   
+       return;
+     }
+     _Clicked = true;
+     timeout = setTimeout(() => {
+      _Clicked = false;
+      handleStart();
+     }, 300);
+   
+  }
     
   return (
     <div className="App">
@@ -78,7 +72,7 @@ function App() {
                 start={handleStart}
                 stop={handleStop}
                 reset={handleReset}
-                resume={handleWait}
+                wait={handleWait}
                 status={status}
             />
           </div>
