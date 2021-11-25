@@ -10,7 +10,7 @@ export function useDoubleClick(callback) {
         else {
             clearTimeout(timer.current);
             timer.current = null;
-            callback && callback(event);
+            callback(event);
         }
     }, [callback]);
     return handler;
