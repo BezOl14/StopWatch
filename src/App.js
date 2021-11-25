@@ -1,19 +1,16 @@
 import './App.css';
 import React, { useState, useEffect} from 'react';      
 import { interval, Subject } from "rxjs";
-import { takeUntil} from "rxjs/operators"             
-
+import { takeUntil} from "rxjs/operators" 
+            
 import DisplayComponent from './components/DisplayComponent';
 import ButtonComponent from './components/ButtonComponent';
-
+import {useDoubleClick} from './hooks/UseDoubleClick';
 
 function App() {
   const [time, setTime] = useState(0);
   const [watchOn, setWatchOn] = useState(false);
   const [status, setStatus] = useState(0);
- 
-  var _Clicked = false;
-  var timeout;
 
   useEffect(() => {
     const unsubscribe = new Subject();
@@ -52,21 +49,10 @@ function App() {
     handleStart();
   }
 
-  ///
-  const handleWait = () => {
-
-    if(_Clicked) {
-     _Clicked = false;
-      setWatchOn(timeout);
-     }
-     _Clicked = true;
-     timeout = setTimeout(() => {
-      _Clicked = false;
-      setWatchOn(false);
-      setStatus(0);
-     }, 300);
-   
-  }
+  const handleWait = useDoubleClick((event) => {
+    setWatchOn(false);
+    setStatus(0);
+  });
     
   return (
     <div className="App">
