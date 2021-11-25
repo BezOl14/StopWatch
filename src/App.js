@@ -41,23 +41,29 @@ function App() {
       setWatchOn(false);
     }
     setStatus(2);
+    setTime(0);
+
   }
 
   const handleReset = () => {
     setTime(0);
     setWatchOn(false);
     setStatus(0);
+    handleStart();
   }
+
+  ///
   const handleWait = () => {
+
     if(_Clicked) {
-      _Clicked = false;
-       setWatchOn(timeout);   
-       return;
+     _Clicked = false;
+      setWatchOn(timeout);
      }
      _Clicked = true;
      timeout = setTimeout(() => {
       _Clicked = false;
-      handleStart();
+      setWatchOn(false);
+      setStatus(0);
      }, 300);
    
   }
