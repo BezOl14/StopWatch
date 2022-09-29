@@ -5,7 +5,7 @@ export function useDoubleClick(callback) {
         if(!timer.current) {
             timer.current = setTimeout(() => {
                 timer.current = null;
-            }, 300);
+            }, 1000);
         }
         else {
             clearTimeout(timer.current);
